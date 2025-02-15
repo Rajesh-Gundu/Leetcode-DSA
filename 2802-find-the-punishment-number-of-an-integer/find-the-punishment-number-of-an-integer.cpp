@@ -1,13 +1,13 @@
 class Solution {
 public:
-    bool check(int num,string& s,int idx,int cur) {
+    bool check(int target,string& s,int idx,int prevSum) {
         if(idx == s.length()) {
-            return (cur == num);
+            return (target == prevSum);
         }
-        int n = 0;
+        int cur = 0;
         for(int i=idx;i<s.length();i++) {
-            n = n*10 + (s[i]-'0');
-            if(check(num,s,i+1,cur+n))
+            cur = cur*10 + (s[i]-'0');
+            if(check(target,s,i+1,prevSum+cur))
                 return true;
         }
         return false;
@@ -16,15 +16,9 @@ public:
         int ans = 0;
         for(int i=1;i<=n;i++) {
             int sq = i*i;
-            string s;
-            while(sq) {
-                int ld = sq%10;
-                sq /= 10;
-                s += char(ld+48);
-            }
-            reverse(s.begin(),s.end());
+            string s = to_string(sq);
             if(check(i,s,0,0)) {
-                ans += (i*i);
+                ans += (sq);
             }
         }
         return ans;
