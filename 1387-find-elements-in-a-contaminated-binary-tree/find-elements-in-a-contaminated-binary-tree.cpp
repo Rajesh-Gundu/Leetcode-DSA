@@ -13,8 +13,6 @@ class FindElements {
 public:
     unordered_set<int> data;
     void filldata(TreeNode* root,int x) {
-        if(root == nullptr)
-            return;
         data.insert(x);
         if(root->left)
             filldata(root->left,2*x+1);
