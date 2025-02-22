@@ -12,7 +12,7 @@
 class Solution {
 public:
     int idx;
-    TreeNode* solve(string& traversal,int depth) {
+    TreeNode* buildTree(string& traversal,int depth) {
         if(idx >= traversal.length())
             return nullptr;
         int j = idx;
@@ -28,13 +28,13 @@ public:
         }
         TreeNode* node = new TreeNode(val);
         idx = j;
-        node->left = solve(traversal,depth+1);
-        node->right = solve(traversal,depth+1);
+        node->left = buildTree(traversal,depth+1);
+        node->right = buildTree(traversal,depth+1);
         return node;
     }
 
     TreeNode* recoverFromPreorder(string traversal) {
         idx = 0;
-        return solve(traversal,0);
+        return buildTree(traversal,0);
     }
 };
