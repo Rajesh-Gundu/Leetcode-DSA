@@ -12,7 +12,7 @@
 class Solution {
 public:
     TreeNode* solve(vector<int>& preorder,unordered_map<int,int>& mp,int low,int high,int& idx) {
-        if(idx == preorder.size() || high < low)
+        if(idx == preorder.size())
             return nullptr;
         int val = preorder[idx];
         if(mp[val] > high)
