@@ -15,7 +15,7 @@ public:
         if(idx == preorder.size() || high < low)
             return nullptr;
         int val = preorder[idx];
-        if(mp[val] > high || mp[val] < low)
+        if(mp[val] > high)
             return nullptr;
         idx++;
         TreeNode* node = new TreeNode(val);
