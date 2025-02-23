@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    TreeNode* solve(vector<int>& preorder,unordered_map<int,int>& mp,int low,int high,int& idx) {
+    TreeNode* solve(vector<int>& preorder,unordered_map<int,int>& mp,int high,int& idx) {
         if(idx == preorder.size())
             return nullptr;
         int val = preorder[idx];
@@ -19,8 +19,8 @@ public:
             return nullptr;
         idx++;
         TreeNode* node = new TreeNode(val);
-        node->left = solve(preorder,mp,low,mp[val]-1,idx);
-        node->right = solve(preorder,mp,low,mp[val]-1,idx);
+        node->left = solve(preorder,mp,mp[val]-1,idx);
+        node->right = solve(preorder,mp,mp[val]-1,idx);
         return node;
     }
     TreeNode* constructFromPrePost(vector<int>& preorder, vector<int>& postorder) {
@@ -29,6 +29,6 @@ public:
         int n = postorder.size();
         for(int i=0;i<n;i++)
             mp[postorder[i]] = i;
-        return solve(preorder,mp,0,n-1,idx);
+        return solve(preorder,mp,n-1,idx);
     }
 };
