@@ -35,10 +35,6 @@ public:
                     }
                 }
                 else if(j+1 >= m && i+1 >= n) {
-                    ans.push_back(str1[i]);
-                    ans.push_back(str2[j]);
-                    i++;
-                    j++;
                     break;
                 }
                 else if(j+1 >= m) {
