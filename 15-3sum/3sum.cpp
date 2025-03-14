@@ -12,6 +12,7 @@ public:
                 if(nums[l] + nums[r] == (-nums[i])){
                     ans.push_back({nums[i],nums[l],nums[r]});
                     l++;
+                    r--;
                     while(nums[l] == nums[l-1] && l < r) l++;
                 }
                 else if(nums[l] + nums[r] > (-nums[i])) r--;
