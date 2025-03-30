@@ -1,5 +1,5 @@
 class Solution {
-    bool isPresentOnRight(vector<int>& cnt,vector<int>& cur) {
+    bool isNotPresentOnRight(vector<int>& cnt,vector<int>& cur) {
         for(int i=0;i<26;i++) {
             if(cur[i] > 0 && cnt[i] > 0)
                 return false;
@@ -22,7 +22,7 @@ public:
             while(j < n) {
                 cur[s[j]-'a']++;
                 cnt[s[j]-'a']--;
-                if(isPresentOnRight(cnt,cur)) {
+                if(isNotPresentOnRight(cnt,cur)) {
                     ans.push_back(j-i+1);
                     i = j+1;
                     break;
