@@ -9,14 +9,17 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        int cnt = 0;
-        ListNode*  temp = head;
-        while(temp != NULL && cnt <= 10000){
-            cnt++;
-            temp = temp->next;
-        }
-        if(temp == NULL)
+        // using floyd's cycle detection algo
+        if(head == NULL || head->next == NULL)
             return false;
-        return true;
+        ListNode * sp = head;
+        ListNode * fp = head;
+        while(fp != NULL && fp->next != NULL){
+            sp = sp->next;
+            fp = fp->next->next;
+            if(fp == sp)
+                return true;
+        }
+        return false;
     }
 };
