@@ -9,25 +9,49 @@
  * };
  */
 class Solution {
-public:
-    bool isPalindrome(ListNode* head) {
-        if(head->next == NULL) return true;
-        stack<int> st;
-        ListNode* sp = head;
-        ListNode* fp = head;
-        while(fp != NULL && fp->next != NULL){
-            st.push(sp->val);
-            sp = sp->next;
-            fp = fp->next->next;
-        }
-        if(fp != NULL)
-            sp = sp->next;
-        while(sp != NULL){
-            if(sp->val != st.top())
+    bool compareLL(ListNode* h1,ListNode* h2) {
+        while(h1 && h2) {
+            if(h1->val != h2->val)
                 return false;
-            sp = sp->next;
-            st.pop();
+            h1 = h1->next;
+            h2 = h2->next;
         }
         return true;
+    }
+
+    ListNode* reverseLL(ListNode* head) {
+        ListNode* cur = nullptr;
+        ListNode* prev = nullptr;
+        while(head) {
+            cur = head;
+            head = head->next;
+            cur->next = prev;
+            prev = cur;
+        }
+        return prev;
+    }
+
+    int getLength(ListNode* head) {
+        int cnt = 0;
+        while(head) {
+            cnt++;
+            head = head->next;
+        }
+        return cnt;
+    }
+
+public:
+    bool isPalindrome(ListNode* head) {
+        if(head->next == nullptr)
+            return true;
+        int n = getLength(head);
+        int mid = (n+1)/2;
+        ListNode* t = head;
+        for(int i=1;i<mid;i++) {
+            t = t->next;
+        }
+        ListNode* h2 = reverseLL(t->next);
+        t->next = nullptr;
+        return compareLL(head,h2);
     }
 };
