@@ -2,13 +2,17 @@ class Solution {
 public:
     int missingNumber(vector<int>& nums) {
         int n = nums.size();
-        int xorOfAllNumbers = 0;
-        int xorOfArrNumbers = 0;
-        for(int i=0;i<n;i++) {
-            xorOfAllNumbers ^= i;
-            xorOfArrNumbers ^= nums[i];
+        for(int i=0;i<=n;i++) {
+            bool isFind = false;
+            for(int j=0;j<n;j++) {
+                if(nums[j] == i) {
+                    isFind = true;
+                    break;
+                }
+            }
+            if(!isFind)
+                return i;
         }
-        xorOfAllNumbers ^= n;
-        return (xorOfAllNumbers ^ xorOfArrNumbers);
+        return 0;
     }
 };
