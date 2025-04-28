@@ -38,21 +38,19 @@ public:
     ListNode* sortList(ListNode* head) {
         if(head == NULL || head->next == NULL)
             return head;
-        int n = 0;
-        ListNode* cur = head;
-        while(cur) {
-            n++;
-            cur = cur->next;
+        ListNode* slow = head;
+        ListNode* fast = head->next;
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
         }
-        int cnt = (n+1)/2 - 1;
-        cur = head;
-        while(cnt--) {
-            cur = cur->next;
-        }
-        ListNode* head1 = cur->next;
-        cur->next = NULL;
-        head = sortList(head);
-        head1 = sortList(head1);
-        return merge(head,head1);
+    
+        ListNode* mid = slow->next;
+        slow->next = nullptr;
+
+        ListNode* left = sortList(head);
+        ListNode* right = sortList(mid);
+        
+        return merge(left, right);
     }
 };
