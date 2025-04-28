@@ -19,21 +19,20 @@ public:
         while(cur != NULL) {
             if(cur->child) {
                 Node* nxt = cur->next;
-                cur->next = flatten(cur->child);
+                cur->next = cur->child;
                 cur->next->prev = cur;
                 cur->child = NULL;
 
-                while(cur->next)
-                    cur = cur->next;
+                Node* last = cur->next;
+                while(last->next)
+                    last = last->next;
                 
-                if(nxt)  {
-                    cur->next = nxt;
-                    nxt->prev = cur;
-                }
+                last->next = nxt;
+                if(nxt)
+                    nxt->prev = last;
             }
             cur = cur->next;
         }
-
         return head;
     }
 };
