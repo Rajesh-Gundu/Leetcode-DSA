@@ -35,13 +35,14 @@ public:
         p1 = head;
         Node* cloneHead = head->next;
         Node* p2 = cloneHead;
-        while(p1 != NULL) {
-            p1->next = p2->next;
+        while(p2->next != NULL) {
+            p1->next = p1->next->next;
+            p2->next = p2->next->next;
             p1 = p1->next;
-            if(p1 != NULL)
-                p2->next = p1->next;
             p2 = p2->next;
         }
+        p1->next = nullptr;
+        p2->next = nullptr;
         return cloneHead;
     }
 };
