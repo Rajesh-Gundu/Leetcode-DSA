@@ -21,16 +21,17 @@ public:
         }
         while(!pq.empty()) {
             auto t = pq.top();
+            ListNode* cur = t.second;
             pq.pop();
             if(head == nullptr) {
-                head = t.second;
+                head = cur;
             }
             else {
-                prev->next = t.second;
+                prev->next = cur;
             }
-            prev = t.second;
-            if(t.second->next) {
-                pq.push({t.second->next->val,t.second->next});
+            prev = cur;
+            if(cur->next) {
+                pq.push({cur->next->val,cur->next});
             }
         }
         return head;
