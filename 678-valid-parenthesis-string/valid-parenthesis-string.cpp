@@ -1,30 +1,22 @@
 class Solution {
 public:
     bool checkValidString(string s) {
-        stack<pair<char,int>> st;
-        int stars = 0;
-        for(char ch : s) {
-            if(ch == '(') {
-                st.push({ch,stars});
-            }
-            else if(ch == '*') {
-                stars++;
-            }
-            else {
-                if(st.empty() && stars == 0)
-                    return false;
-                if(!st.empty())
-                    st.pop();
-                else
-                    stars--;
-            }
-        }
-        while(!st.empty()) {
-            int cnt = st.top().second;
-            st.pop();
-            if(stars - cnt == 0)
+        int openCnt = 0;
+        int closeCnt = 0;
+        int n = s.length();
+        for(int i=0;i<n;i++) {
+            if(s[i] == '(' || s[i] == '*')
+                openCnt++;
+            else
+                openCnt--;
+
+            if(s[n-i-1] == ')' || s[n-i-1] == '*')
+                closeCnt++;
+            else
+                closeCnt--;
+
+            if(openCnt < 0 || closeCnt < 0)
                 return false;
-            stars--;
         }
         return true;
     }
