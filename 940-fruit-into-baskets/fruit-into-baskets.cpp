@@ -15,7 +15,6 @@ public:
                 idx2 = j;
             }
             else {
-                cout << i << " " << j  << " " << idx1  << " " << idx2 << endl;
                 i = min(idx1,idx2)+1;
                 idx1 = (i == idx1+1 ? idx2 : idx1);
                 idx2 = j;
