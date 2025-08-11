@@ -5,29 +5,25 @@ public:
         int n = nums.size();
         int i = 0;
         int j = 0;
+        int prevEvens = 0;
+        int odds = 0;
         while(j < n) {
-            bool f = true;
-            if(nums[j]%2) {
-                if(k) {
-                    k--;
+            if(nums[j]%2)
+                odds++;
+            while(i < j && ((nums[i]%2==0) || (odds > k))) {
+                if(nums[i]%2 == 0) {
+                    prevEvens++;
                 }
                 else {
-                    f = false;
+                    prevEvens = 0;
+                    odds--;
                 }
+                i++;
             }
-            if(k == 0) {
-                int r = j+1;
-                while(r < n && nums[r]%2 == 0)
-                    r++;
-                while(i <= j && k == 0) {
-                    if(nums[i]%2)
-                        k++;
-                    i++;
-                    ans += (r-j);
-                }
+            if(odds == k) {
+                ans += 1 + prevEvens;
             }
-            if(f)
-                j++;
+            j++;
         }
         return ans;
     }
