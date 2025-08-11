@@ -1,25 +1,26 @@
 class Solution {
 public:
-    bool canPick(int num,unordered_map<int,int> mp) {
+    bool canPick(int num,int cntN[]) {
+        int cntCur[10] = {0};
         while(num) {
             int d = num%10;
+            cntCur[d]++;
             num /= 10;
-            if(mp.find(d) == mp.end())
-                return false;
-            mp[d]--;
-            if(mp[d] == 0)
-                mp.erase(d);
         }
-        return (mp.size() == 0);
+        for(int i=0;i<10;i++) {
+            if(cntN[i] != cntCur[i])
+                return false;
+        }
+        return true;
     }
     bool reorderedPowerOf2(int n) {
-        unordered_map<int,int> mp;
+        int cntN[10] = {0};
         while(n) {
-            mp[n%10]++;
+            cntN[n%10]++;
             n /= 10;
         }
-        for(int i=0;i<32;i++) {
-            if(canPick((1<<i),mp)) {
+        for(int i=0;i<31;i++) {
+            if(canPick(1<<i,cntN)) {
                 return true;
             }
         }
