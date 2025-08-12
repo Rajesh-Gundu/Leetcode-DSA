@@ -1,14 +1,13 @@
 class Solution {
 public:
     int divide(long long dividend, long long divisor) {
+        if(dividend == divisor) return 1;
         if((dividend == INT_MIN || dividend == INT_MAX) && (divisor == 1 || divisor == -1)) {
             if(dividend < 0 == divisor < 0) {
                 return INT_MAX;
             }
             return -dividend;
         }
-            
-        if(dividend == divisor) return 1;
         bool isPos = (dividend < 0 == divisor < 0);
         dividend = abs(dividend);
         divisor = abs(divisor);
