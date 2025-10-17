@@ -1,40 +1,43 @@
 class Solution {
 public:
+    typedef pair<long long,int> P;
     int countPaths(int n, vector<vector<int>>& roads) {
-        const int MOD = 1e9 + 7;
-        vector<vector<pair<int, int>>> graph(n);
-        for (auto& road : roads) {
-            int startNode = road[0], endNode = road[1], travelTime = road[2];
-            graph[startNode].emplace_back(endNode, travelTime);
-            graph[endNode].emplace_back(startNode, travelTime);
+        vector<vector<P>> adj(n);
+        for(auto& r : roads) {
+            int u = r[0];
+            int v = r[1];
+            int w = r[2];
+            adj[u].push_back({v,w});
+            adj[v].push_back({u,w});
         }
-        priority_queue<pair<long long, int>, vector<pair<long long, int>>,greater<>>minHeap;
-        vector<long long> shortestTime(n, LLONG_MAX);
-        vector<int> pathCount(n, 0);
 
-        shortestTime[0] = 0; 
-        pathCount[0] = 1;     
-
-        minHeap.emplace(0, 0);  
-
-        while (!minHeap.empty()) {
-            long long currTime = minHeap.top().first; 
-            int currNode = minHeap.top().second;
-            minHeap.pop();
-            if (currTime > shortestTime[currNode]) continue;
-
-            for (auto& [neighborNode, roadTime] : graph[currNode]) {
-                if (currTime + roadTime < shortestTime[neighborNode]) {
-                    shortestTime[neighborNode] = currTime + roadTime;
-                    pathCount[neighborNode] = pathCount[currNode];
-                    minHeap.emplace(shortestTime[neighborNode], neighborNode);
+        vector<long long> dist(n,LLONG_MAX);
+        vector<int> ways(n,0);
+        dist[0] = 0;
+        ways[0] = 1;
+        priority_queue<P,vector<P>,greater<P>> pq;
+        pq.push({0,0});
+        int m = 1e9+7;
+        while(!pq.empty()) {
+            long long d = pq.top().first;
+            int u = pq.top().second;
+            pq.pop();
+            if(d > dist[u])
+                continue;
+            for(auto it : adj[u]) {
+                int v = it.first;
+                int w = it.second;
+                long long cur = 0ll + d + w;
+                if(dist[v] > cur) {
+                    dist[v] = cur;
+                    ways[v] = ways[u];
+                    pq.push({cur,v});
                 }
-                else if (currTime + roadTime == shortestTime[neighborNode]) {
-                    pathCount[neighborNode] =
-                        (pathCount[neighborNode] + pathCount[currNode]) % MOD;
+                else if(dist[v] == cur) {
+                    ways[v] = (0ll + ways[v] + ways[u])%m;
                 }
             }
         }
-        return pathCount[n - 1];
+        return ways[n-1];
     }
 };
