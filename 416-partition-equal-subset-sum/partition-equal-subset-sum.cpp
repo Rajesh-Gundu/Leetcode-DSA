@@ -11,7 +11,18 @@ public:
         int n = nums.size();
         int total = accumulate(nums.begin(),nums.end(),0);
         if(total%2) return false;
-        vector<vector<int>> dp(n,vector<int> (total/2,-1));
-        return memoi(n-1,0,total,nums,dp);
+        vector<vector<int>> dp(n,vector<int> (total/2 + 1,0));
+        for(int i=0;i<n;i++) {
+            dp[i][0] = 1;
+        }
+        for(int i=1;i<n;i++) {
+            for(int j=1;j<=total/2;j++) {
+                if(nums[i] <= j) {
+                    dp[i][j] = dp[i-1][j-nums[i]];
+                }
+                dp[i][j] |= dp[i-1][j];
+            }
+        }
+        return dp[n-1][total/2];
     }
 };
