@@ -1,18 +1,17 @@
 class Solution {
-    bool solve(vector<int>& nums,int s1,int s2,int idx,vector<vector<int>>& dp) {
-        if(s1 == s2)
-            return true;
-        if(idx < 0)
-            return false;
-        if(dp[idx][s2] != -1) return dp[idx][s2];
+    bool memoi(int i,int cur,int rest,vector<int>& nums,vector<vector<int>>& dp) {
+        if(cur == rest) return true;
+        if(i < 0 || cur > rest)   return false;
+        if(dp[i][cur] != -1)    return dp[i][cur];
 
-        return dp[idx][s2] = solve(nums,s1-nums[idx],s2+nums[idx],idx-1,dp) || solve(nums,s1,s2,idx-1,dp);
+        return dp[i][cur] = memoi(i-1,cur+nums[i],rest-nums[i],nums,dp) || memoi(i-1,cur,rest,nums,dp);
     }
 public:
     bool canPartition(vector<int>& nums) {
         int n = nums.size();
-        int sum = accumulate(nums.begin(),nums.end(),0);
-        vector<vector<int>> dp(n,vector<int> (sum+1,-1));
-        return solve(nums,sum,0,n-1,dp);
+        int total = accumulate(nums.begin(),nums.end(),0);
+        if(total%2) return false;
+        vector<vector<int>> dp(n,vector<int> (total/2,-1));
+        return memoi(n-1,0,total,nums,dp);
     }
 };
