@@ -3,7 +3,7 @@ public:
     int coinChange(vector<int>& coins, int amount) {
         queue<pair<int,int>> q;
         q.push({0,amount});
-        vector<bool> vis(10001,false); 
+        vector<bool> vis(amount+1,false); 
         vis[amount] = true;
         while(!q.empty()) {
             int steps = q.front().first;
