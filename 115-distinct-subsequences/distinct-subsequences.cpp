@@ -3,21 +3,22 @@ public:
     int numDistinct(string s, string t) {
         int n1 = s.length();
         int n2 = t.length();
-        vector<vector<unsigned long long>> dp(n1+1,vector<unsigned long long> (n2+1,0));
-        
-        for(int i=0;i<=n1;i++)
-            dp[i][0] = 1;
+        vector<unsigned long long> prev(n2+1,0);
+        prev[0] = 1;
         
         for(int i=1;i<=n1;i++) {
+            vector<unsigned long long> cur(n2+1,0);
+            cur[0] = 1;
             for(int j=1;j<=n2;j++) {
                 if(s[i-1] == t[j-1]) {
-                    dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
+                    cur[j] = prev[j-1] + prev[j];
                 }
                 else
-                    dp[i][j] = dp[i-1][j];
+                    cur[j] = prev[j];
             }
+            prev = cur;
         }
 
-        return dp[n1][n2];
+        return prev[n2];
     }
 };
