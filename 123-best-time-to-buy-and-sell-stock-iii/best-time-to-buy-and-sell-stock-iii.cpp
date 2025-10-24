@@ -18,22 +18,24 @@ class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
-        vector<vector<int>> dp(n+1,vector<int> (5,0));
+        vector<int> next(5,0);
 
         for(int i=n-1;i>=0;i--) {
+            vector<int> cur(5,0);
             for(int t=3;t>=0;t--) {
                 if(t%2 == 0) {
-                    int include = -prices[i] + dp[i+1][t+1];
-                    int skip = dp[i+1][t];
-                    dp[i][t] = max(include,skip);
+                    int include = -prices[i] + next[t+1];
+                    int skip = next[t];
+                    cur[t] = max(include,skip);
                 }
                 else {
-                    int include = prices[i] + dp[i+1][t+1];
-                    int skip = dp[i+1][t];
-                    dp[i][t] = max(include,skip);
+                    int include = prices[i] + next[t+1];
+                    int skip = next[t];
+                    cur[t] = max(include,skip);
                 }
             }
+            next = cur;
         }
-        return dp[0][0];
+        return next[0];
     }
 };
